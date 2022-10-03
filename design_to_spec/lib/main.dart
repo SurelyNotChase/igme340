@@ -62,71 +62,80 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        child: Padding(
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            width: 140,
-                            height: 140,
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              border: Border.all(width: 5, color: Colors.white),
-                              color: const Color(0xFF324E44),
-                              image: const DecorationImage(
-                                image: AssetImage('assets/images/chest.png'),
-                                scale: 3.0,
-                                alignment: Alignment.bottomCenter,
-                                fit: BoxFit.none,
-                              ),
-                            ),
-                            child: const Text(
-                              "Chest",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: "retro_computer_personal_use",
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        child: Padding(
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            width: 250,
-                            height: 140,
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: const Color(0xFF686868),
-                            ),
-                            child: const Text(
-                              "Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: "retro_computer_personal_use",
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                children: [ItemCard()],
               ),
             ]),
           ),
         ),
       ),
+    );
+  }
+}
+
+class ItemCard extends StatelessWidget {
+  const ItemCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SizedBox(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+            child: Container(
+              width: 140,
+              height: 140,
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                border: Border.all(width: 5, color: Colors.white),
+                color: const Color(0xFF324E44),
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/chest.png'),
+                  scale: 3.0,
+                  alignment: Alignment.bottomCenter,
+                  fit: BoxFit.none,
+                ),
+              ),
+              child: const Text(
+                "Chest",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "retro_computer_personal_use",
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+            child: Container(
+              width: 240,
+              height: 140,
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: const Color(0xFF686868),
+              ),
+              child: const Text(
+                "Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: "retro_computer_personal_use",
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
