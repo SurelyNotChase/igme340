@@ -52,19 +52,120 @@ class _MyHomePageState extends State<MyHomePage> {
                 fit: BoxFit.cover),
           ),
           child: Align(
-            alignment: Alignment.topCenter,
-            child: Stack(alignment: Alignment.center, children: [
-              Container(
-                decoration: BoxDecoration(color: Color(0xFF35363D)),
-                width: 400,
-                height: 400,
-                alignment: Alignment.center,
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 400,
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(width: 5, color: Colors.white),
+                          color: const Color(0xFF324E44),
+                          image: const DecorationImage(
+                            image: AssetImage('assets/images/oaktree.png'),
+                            scale: 3.0,
+                            alignment: Alignment.bottomCenter,
+                            fit: BoxFit.none,
+                          ),
+                        ),
+                        width: 400,
+                        height: 400,
+                        alignment: Alignment.center,
+                      ),
+                      Stack(
+                        children: [
+                          Container(
+                            decoration:
+                                const BoxDecoration(color: Color(0xFF686868)),
+                            width: 400,
+                            height: 400,
+                            alignment: Alignment.center,
+                          ),
+                          Column(children: [
+                            Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                child: Container(
+                                  
+                                    child: const Text(
+                                  "THE OAK TREE",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: "retro_computer_personal_use",
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ))),
+                            Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                child: Container(
+                                    child: const Text(
+                                  "An oak is the most common tree in the game, found in a variety of biomes, available in several variants.",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: "retro_computer_personal_use",
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ))),
+                            Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                child: Container(
+                                    child: const Text(
+                                  "THE OAK TREE",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: "retro_computer_personal_use",
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ))),
+                          ])
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 400,
+                  ),
+                  Stack(alignment: Alignment.center, children: [
+                    Container(
+                      decoration: const BoxDecoration(color: Color(0xFF35363D)),
+                      width: 400,
+                      height: 480,
+                      alignment: Alignment.center,
+                    ),
+                    Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                      children: const [
+                        ItemCard('assets/images/planks.png',
+                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.',
+                            'Planks'),
+                        SizedBox(height: 15),
+                        ItemCard('assets/images/stick.png',
+                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.',
+                            'Sticks'),
+                        SizedBox(height: 15),
+                        ItemCard('assets/images/chest.png',
+                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.','Chest'),
+                      SizedBox(height: 15),
+                        ItemCard('assets/images/stairs.png',
+                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.','Stairs')
+                      
+                      ],
+                    ),
+                  ])
+                ],
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [ItemCard()],
-              ),
-            ]),
+            ),
           ),
         ),
       ),
@@ -73,9 +174,11 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({
-    Key? key,
-  }) : super(key: key);
+  final String url;
+  final String text;
+  final String name;
+
+  const ItemCard(this.url, this.text,this.name);
 
   @override
   Widget build(BuildContext context) {
@@ -93,17 +196,17 @@ class ItemCard extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 border: Border.all(width: 5, color: Colors.white),
                 color: const Color(0xFF324E44),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/chest.png'),
+                image: DecorationImage(
+                  image: AssetImage(url),
                   scale: 3.0,
                   alignment: Alignment.bottomCenter,
                   fit: BoxFit.none,
                 ),
               ),
-              child: const Text(
-                "Chest",
+              child: Text(
+                name,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: "retro_computer_personal_use",
                   color: Colors.white,
                   fontSize: 20,
@@ -119,14 +222,14 @@ class ItemCard extends StatelessWidget {
               width: 240,
               height: 140,
               padding: const EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: const Color(0xFF686868),
+                color: Color(0xFF686868),
               ),
-              child: const Text(
-                "Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.",
+              child: Text(
+                text,
                 textAlign: TextAlign.left,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: "retro_computer_personal_use",
                   color: Colors.white,
                   fontSize: 16,
