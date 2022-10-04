@@ -31,8 +31,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String searchUrl =
-      'https://api.giphy.com/v1/gifs/search?api_key=eNfxv8wrzKUIgLfVh3NPADKR9LrjlcxI&q={1}&limit=25&offset=0&rating=g&lang=en';
-  late String apiKey = '';
+      'https://api.giphy.com/v1/gifs/search?api_key=${apiKey}={1}&limit=25&offset=0&rating=g&lang=en';
+  late String apiKey = 'eNfxv8wrzKUIgLfVh3NPADKR9LrjlcxI&q';
+  List itemList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -49,17 +50,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text("search")),
             Expanded(
               child: GridView.builder(
-                itemCount: 8,
+                itemCount: itemList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
-                itemBuilder: (context, index) => const GridTile(
-                    header: Text("hEADER"),
-                    child: Center(
-                      child: Text("hello"),
-                    )),
+                itemBuilder: (context, index) {
+                  return GridTile(
+                    header: Text("Header"),
+                    child: Container(
+                      child: Image.network(itemList[index]),
+                    ),
+                    footer: Text("Footer"),
+                  );
+                },
               ),
             ),
           ],
@@ -67,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future doSearch() async {
+    print('dosearch');
     String url = searchUrl;
     url = url.replaceAll("{0}", apiKey);
     url = url.replaceAll("{1}", 'dog');
@@ -75,6 +81,11 @@ class _MyHomePageState extends State<MyHomePage> {
     print(url);
     var respone = await http.get(Uri.parse(url));
     var jData = jsonDecode(respone.body);
-    print(jData);
+    for (int i = 0; i < jData["data"].length; i++) {
+      setState(() {
+        itemList.add(jData["data"][i]["images"]["original_still"]["url"]);
+      });
+    }
+    print(itemList);
   }
 }
