@@ -30,8 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late String searchUrl;
-  late String apiKey;
+  late String searchUrl =
+      'https://api.giphy.com/v1/gifs/search?api_key=eNfxv8wrzKUIgLfVh3NPADKR9LrjlcxI&q={1}&limit=25&offset=0&rating=g&lang=en';
+  late String apiKey = '';
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           children: [
             ElevatedButton(
-              onPressed: () => doSearch(),
-              child: const SizedBox(
-                width: 50,
-                height: 50,
-              ),
-            ),
+                onPressed: () async {
+                  doSearch();
+                },
+                child: const Text("search")),
             Expanded(
               child: GridView.builder(
                 itemCount: 8,
