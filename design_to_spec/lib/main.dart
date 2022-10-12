@@ -174,6 +174,18 @@ class _MyHomePageState extends State<MyHomePage> {
                             'Stairs'),
                       ],
                     ),
+                  ]),
+                  Stack(alignment: Alignment.center, children: [
+                    Container(
+                      decoration: const BoxDecoration(color: Color(0xFF35363D)),
+                      width: 400,
+                      height: 610,
+                      alignment: Alignment.topCenter,
+                    ),
+                    Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                      ),
                   ])
                 ],
               ),
@@ -190,6 +202,7 @@ class ItemCard extends StatelessWidget {
   final String text;
   final String name;
 
+  // ignore: use_key_in_widget_constructors
   const ItemCard(this.url, this.text, this.name);
 
   @override
@@ -256,7 +269,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: ElevatedButton(
@@ -265,7 +278,7 @@ class ItemCard extends StatelessWidget {
                           },
                           child: const Text(
                             "Close",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: "RetroComputer",
                               color: Colors.black,
                               fontSize: 16,
