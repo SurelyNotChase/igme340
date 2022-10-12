@@ -258,10 +258,19 @@ class ItemCard extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                     child: Align(
-                      alignment:Alignment.bottomRight,
+                      alignment: Alignment.bottomRight,
                       child: ElevatedButton(
-                        
-                          onPressed: () {Navigator.pop(context);}, child: const Text("Close")),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Close",
+                            style: const TextStyle(
+                              fontFamily: "RetroComputer",
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          )),
                     ),
                   ),
                   const SizedBox(
