@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -38,9 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         titleSpacing: 50,
         title: Text(style: const TextStyle(color: Colors.white), widget.title),
-        leading: SvgPicture.asset(
-          'assets/images/pickaxe.svg',
-          semanticsLabel: 'mc pickaxe',
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SvgPicture.asset(
+            'assets/images/pickaxe.svg',
+            semanticsLabel: 'mc pickaxe',
+            color: Colors.white,
+          ),
         ),
       ),
       body: Center(
@@ -52,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fit: BoxFit.cover),
           ),
           child: Align(
-            alignment: Alignment.center,
+            // alignment: Alignment.center,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -83,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             decoration:
                                 const BoxDecoration(color: Color(0xFF686868)),
                             width: 400,
-                            height: 400,
+                            height: 360,
                             alignment: Alignment.center,
                           ),
                           Column(children: [
@@ -91,16 +97,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 20, 20, 0),
                                 child: Container(
-                                  
+                                    alignment: Alignment.topLeft,
                                     child: const Text(
-                                  "THE OAK TREE",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontFamily: "retro_computer_personal_use",
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
-                                ))),
+                                      "THE OAK TREE",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontFamily: "RetroComputerCaps",
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    ))),
                             Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -109,7 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   "An oak is the most common tree in the game, found in a variety of biomes, available in several variants.",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontFamily: "retro_computer_personal_use",
+                                    // fontFamily: "RetroComputer",
+                                    fontStyle: FontStyle.normal,
                                     color: Colors.white,
                                     fontSize: 20,
                                   ),
@@ -119,10 +126,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                     const EdgeInsets.fromLTRB(20, 20, 20, 0),
                                 child: Container(
                                     child: const Text(
-                                  "THE OAK TREE",
+                                  "It has the smallest initial space requirement for growth, and along with dark oak trees, it has a chance to drop an apple when a leaf block is destroyed. As with birch trees, an oak tree grown near flowers can generate with a bee nest attached.",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontFamily: "retro_computer_personal_use",
+                                    // fontFamily: "RetroComputer",
                                     color: Colors.white,
                                     fontSize: 20,
                                   ),
@@ -139,27 +146,32 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                       decoration: const BoxDecoration(color: Color(0xFF35363D)),
                       width: 400,
-                      height: 480,
-                      alignment: Alignment.center,
+                      height: 610,
+                      alignment: Alignment.topCenter,
                     ),
                     Column(
                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
                       children: const [
-                        ItemCard('assets/images/planks.png',
-                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.',
-                            'Planks'),
+                        ItemCard(
+                            'assets/images/planks.png',
+                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft. Planks are used in many crafting recipes. Doors, fences, fence gates, slabs, stairs, boats, trapdoors, pressure plates, and buttons must be crafted from planks of the same type, and the crafted result depends on the type used. For other products, planks of different types can be mixed freely and the wood types in the product is indeterminate. Crimson and warped planks cannot be used to make boats.',
+                            'Planks '),
                         SizedBox(height: 15),
-                        ItemCard('assets/images/stick.png',
-                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.',
+                        ItemCard(
+                            'assets/images/stick.png',
+                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft. Some items, when used, place a block or entity version of themselves into the game world. Put simply, they are an item when in the inventory, and a block when placed. For example, boats turn into an entity when placed, and beds turn into a group of blocks when placed. When selected in the hotbar, items briefly display their names above the HUD.',
                             'Sticks'),
                         SizedBox(height: 15),
-                        ItemCard('assets/images/chest.png',
-                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.','Chest'),
-                      SizedBox(height: 15),
-                        ItemCard('assets/images/stairs.png',
-                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.','Stairs')
-                      
+                        ItemCard(
+                            'assets/images/chest.png',
+                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft. Some items, when used, place a block or entity version of themselves into the game world. Put simply, they are an item when in the inventory, and a block when placed. For example, boats turn into an entity when placed, and beds turn into a group of blocks when placed. When selected in the hotbar, items briefly display their names above the HUD.',
+                            'Chest'),
+                        SizedBox(height: 15),
+                        ItemCard(
+                            'assets/images/stairs.png',
+                            'Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft. Some items, when used, place a block or entity version of themselves into the game world. Put simply, they are an item when in the inventory, and a block when placed. For example, boats turn into an entity when placed, and beds turn into a group of blocks when placed. When selected in the hotbar, items briefly display their names above the HUD.',
+                            'Stairs'),
                       ],
                     ),
                   ])
@@ -178,7 +190,7 @@ class ItemCard extends StatelessWidget {
   final String text;
   final String name;
 
-  const ItemCard(this.url, this.text,this.name);
+  const ItemCard(this.url, this.text, this.name);
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +198,69 @@ class ItemCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SizedBox(
+            child: GestureDetector(
+          onTap: () => showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              
+              content: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: Text(this.name,
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Container(
+                        width: 250,
+                        height: 250,
+                        padding: const EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(width: 5, color: Colors.white),
+                          color: const Color(0xFF324E44),
+                          image: DecorationImage(
+                            image: AssetImage(url),
+                            scale: 1.5,
+                            alignment: Alignment.bottomCenter,
+                            fit: BoxFit.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 250,
+                    height: 350,
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.white,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Text(
+                        text,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontFamily: "RetroComputer",
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              backgroundColor: const Color(0xFF686868),
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
             child: Container(
@@ -207,14 +282,14 @@ class ItemCard extends StatelessWidget {
                 name,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontFamily: "retro_computer_personal_use",
+                  fontFamily: "RetroComputer",
                   color: Colors.white,
                   fontSize: 20,
                 ),
               ),
             ),
           ),
-        ),
+        )),
         SizedBox(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
@@ -226,13 +301,15 @@ class ItemCard extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 color: Color(0xFF686868),
               ),
-              child: Text(
-                text,
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontFamily: "retro_computer_personal_use",
-                  color: Colors.white,
-                  fontSize: 16,
+              child: SingleChildScrollView(
+                child: Text(
+                  text,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontFamily: "RetroComputer",
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ),
@@ -242,19 +319,31 @@ class ItemCard extends StatelessWidget {
     );
   }
 }
-//child: Padding(padding: const EdgeInsets.all(0),),
 
-                    // const SizedBox(
-                    //   width: 200,
-                    //   height: 140,
-                    //   child: Padding(
-                    //     padding: EdgeInsets.all(10),
-                    //     child: SizedBox(
-                    //       child: Text(
-                    //           "Planks are common blocks used as building blocks and in crafting recipes. The are one of the first thigns that a player can craft in Minecraft.",
-                    //           style:
-                    //               TextStyle(color: Colors.white, fontSize: 16),
-                    //           textAlign: TextAlign.center),
-                    //     ),
-                    //   ),
-                    // ),
+class DialogExample extends StatelessWidget {
+  const DialogExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: const Text('AlertDialog description'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+      child: const Text('Show Dialog'),
+    );
+  }
+}
