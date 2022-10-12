@@ -202,15 +202,14 @@ class ItemCard extends StatelessWidget {
           onTap: () => showDialog(
             context: context,
             builder: (BuildContext context) => AlertDialog(
-              
               content: Column(
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                      child: Text(this.name,
-                          style: TextStyle(
+                      child: Text(name,
+                          style: const TextStyle(
                             color: Colors.white,
                           )),
                     ),
@@ -251,10 +250,22 @@ class ItemCard extends StatelessWidget {
                         style: const TextStyle(
                           fontFamily: "RetroComputer",
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 16,
                         ),
                       ),
                     ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                    child: Align(
+                      alignment:Alignment.bottomRight,
+                      child: ElevatedButton(
+                        
+                          onPressed: () {Navigator.pop(context);}, child: const Text("Close")),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
                   ),
                 ],
               ),
