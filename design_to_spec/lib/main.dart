@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Design To Spec',
       theme: ThemeData(
         primarySwatch: Colors.grey,
+        fontFamily: 'RetroComputer',
       ),
       debugShowCheckedModeBanner: false,
       home: const MyHomePage(title: 'TREES & WOOD'),
@@ -39,19 +40,69 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
-        title: Text(style: const TextStyle(color: Colors.white), widget.title),
+        title: Text(
+            style: const TextStyle(
+                color: Colors.white,
+                fontSize: 19,
+                fontFamily: 'RetroComputerCaps'),
+            widget.title),
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0),
           child: SvgPicture.asset(
             'assets/images/pickaxe.svg',
             semanticsLabel: 'mc pickaxe',
             color: Colors.white,
           ),
         ),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                      content: Container(
+                    height: 220,
+                    child: Column(
+                      children: [
+                        const Text('About', style: TextStyle(fontSize: 16)),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                              'Created by Chase Lear \n\n Based on the work done in 235\' Design to Sepc Homework. \n\n September 11, 2022'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  "Close",
+                                  style: TextStyle(
+                                    fontFamily: "RetroComputer",
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+                ),
+                child: const Icon(
+                  Icons.person_pin,
+                  size: 35.0,
+                ),
+              )),
+        ],
       ),
       body: Center(
         child: Container(
-          constraints: const BoxConstraints.expand(),
+          // constraints: const BoxConstraints.expand(),
           decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/valley.jpg'),
@@ -62,16 +113,19 @@ class _MyHomePageState extends State<MyHomePage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 400,
-                  ),
                   Column(
                     children: [
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           border: Border.all(width: 5, color: Colors.white),
-                          color: const Color(0xFF324E44),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: <Color>[
+                                Color(0xFF686868),
+                                Color(0xff324E44)
+                              ]),
                           image: const DecorationImage(
                             image: AssetImage('assets/images/oaktree.png'),
                             scale: 3.0,
@@ -177,15 +231,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   ]),
                   Stack(alignment: Alignment.center, children: [
                     Container(
-                      decoration: const BoxDecoration(color: Color(0xFF35363D)),
-                      width: 400,
-                      height: 610,
-                      alignment: Alignment.topCenter,
-                    ),
-                    Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: Color(0xFF324E44),
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/trees.jpg'),
+                          scale: 3.0,
+                          alignment: Alignment.bottomCenter,
+                          fit: BoxFit.none,
+                        ),
                       ),
+                      width: 400,
+                      height: 400,
+                      alignment: Alignment.topCenter,
+                      child: const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Text(
+                          'TREES ARE PRETTY COOL. \n RIGHT? \n\n\n\n\n\n\n\n copyright 2022 \n RIT School of Interactive Games \n and Media',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "RetroComputerCaps",
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
                   ])
                 ],
               ),
@@ -250,7 +321,7 @@ class ItemCard extends StatelessWidget {
                   ),
                   Container(
                     width: 250,
-                    height: 350,
+                    height: 270,
                     padding: const EdgeInsets.all(10.0),
                     decoration: const BoxDecoration(
                       shape: BoxShape.rectangle,
@@ -269,7 +340,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: ElevatedButton(
