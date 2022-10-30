@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late String searchUrl = 'https://api.scripture.api.bible/v1/bibles{language}';
   late String apiKey = 'a2659cf791469685d502c666d9ca0ad4';
   late List<Widget> bibleList = [];
+  late Widget bibleDetails;
   String languageDropDownValue = "eng";
 
   List<String> bibleParams = <String>['language', 'abbreviation', 'name'];
@@ -96,21 +97,28 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
           actions: [
-            DropdownButton(
-              value: languageDropDownValue,
-              onChanged: (String? value) {
-                // This is called when the user selects an item.
-                setState(() {
-                  languageDropDownValue = value!;
-                });
-                getBibles();
-              },
-              items: languageList.map<DropdownMenuItem<String>>((Map value) {
-                return DropdownMenuItem<String>(
-                  value: value['code'],
-                  child: Text(value['nativeName']),
-                );
-              }).toList(),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: DropdownButton(
+                icon: Icon(Icons.language),
+                value: languageDropDownValue,
+                dropdownColor: Colors.black,
+                iconEnabledColor: Colors.white,
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    languageDropDownValue = value!;
+                  });
+                  getBibles();
+                },
+                items: languageList.map<DropdownMenuItem<String>>((Map value) {
+                  return DropdownMenuItem<String>(
+                    value: value['code'],
+                    child: Text('${value['nativeName']} (${value['name']})',
+                        style: TextStyle(color: Colors.white)),
+                  );
+                }).toList(),
+              ),
             ),
           ],
         ),
@@ -150,10 +158,6 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
   }
-
-  String getParams() {
-    return '';
-  }
 }
 
 class Bible extends StatelessWidget {
@@ -165,10 +169,75 @@ class Bible extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
         alignment: Alignment.centerLeft,
-        child: Container(
-            color: Colors.brown,
-            width: 400,
-            child: Padding(
-                padding: const EdgeInsets.all(8.0), child: Text(name))));
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: ElevatedButton(
+            onPressed: () {
+              var thisBibleID = getBibleId(bibleID);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) =>
+                    BibleDetailsDialogue(thisBibleID),
+              );
+            },
+            child: Container(
+                width: 400,
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          )),
+                    ))),
+          ),
+        ));
+  }
+
+  getBibleId(String bibleID) {
+    return 'boogaloo';
+  }
+}
+
+class BibleDetailsDialogue extends StatelessWidget {
+  const BibleDetailsDialogue(
+    thisBibleID, {
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        content: SizedBox(
+      height: 500,
+      child: Column(
+        children: [
+          const Text('Awesome Bible', style: TextStyle(fontSize: 18)),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text('Title:'),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Close",
+                    style: TextStyle(
+                      fontFamily: "RetroComputer",
+                      fontSize: 16,
+                    ),
+                  )),
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 }
