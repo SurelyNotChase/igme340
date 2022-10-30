@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.brown,
       ),
       home: const MyHomePage(title: 'Bible App'),
     );
@@ -35,10 +35,56 @@ class _MyHomePageState extends State<MyHomePage> {
   late String searchUrl = 'https://api.scripture.api.bible/v1/bibles{language}';
   late String apiKey = 'a2659cf791469685d502c666d9ca0ad4';
   late List<Widget> bibleList = [];
-  String languageDropDownValue = "cmn";
+  String languageDropDownValue = "eng";
 
   List<String> bibleParams = <String>['language', 'abbreviation', 'name'];
-  List<String> languageList = <String>['eng', 'ara', 'cmn', 'deu'];
+  List<Map> languageList = <Map>[
+    {
+      'name': 'English',
+      'nativeName': 'English',
+      'code': 'eng',
+    },
+    {
+      'name': 'Mandarin',
+      'nativeName': '中文',
+      'code': 'cmn',
+    },
+    {
+      'name': 'Hindi',
+      'nativeName': 'हिन्दी ',
+      'code': 'hin',
+    },
+    {
+      'name': 'Greek',
+      'nativeName': 'ελληνικά',
+      'code': 'grc',
+    },
+    {
+      'name': 'Sanskirt',
+      'nativeName': 'संस्कृतम् ',
+      'code': 'san',
+    },
+    {
+      'name': 'Spanish',
+      'nativeName': '	español',
+      'code': 'spa',
+    },
+    {
+      'name': 'Portuguese',
+      'nativeName': 'português',
+      'code': 'por',
+    },
+    {
+      'name': 'German',
+      'nativeName': 'Deutsch',
+      'code': 'deu',
+    },
+    {
+      'name': 'Ukrainian',
+      'nativeName': 'Українська',
+      'code': 'ukr',
+    }
+  ];
 
   void initState() {
     getBibles();
@@ -50,12 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
           actions: [
-            ElevatedButton(
-              child: const Text("call"),
-              onPressed: () async {
-                getBibles();
-              },
-            ),
             DropdownButton(
               value: languageDropDownValue,
               onChanged: (String? value) {
@@ -63,11 +103,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   languageDropDownValue = value!;
                 });
+                getBibles();
               },
-              items: languageList.map<DropdownMenuItem<String>>((String value) {
+              items: languageList.map<DropdownMenuItem<String>>((Map value) {
                 return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
+                  value: value['code'],
+                  child: Text(value['nativeName']),
                 );
               }).toList(),
             ),
@@ -87,11 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getBibles() async {
     String url = searchUrl;
+
     setState(() {
       bibleList.clear();
     });
-
-    // url = url.replaceAll("{params}", getParams());
 
     url = url.replaceAll("{language}", "?language=$languageDropDownValue");
 
@@ -101,11 +141,13 @@ class _MyHomePageState extends State<MyHomePage> {
     var jData = jsonDecode(response.body);
 
     // ignore: avoid_print
-    for (var i = 0; i <= jData['data'].length; i++) {
-      setState(() {
-        bibleList
-            .add(BibleButton(jData['data'][i]["name"], jData['data'][i]["id"]));
-      });
+    if (jData.length >= 1) {
+      for (var i = 0; i <= jData['data'].length - 1; i++) {
+        setState(() {
+          bibleList
+              .add(Bible(jData['data'][i]["name"], jData['data'][i]["id"]));
+        });
+      }
     }
   }
 
@@ -114,31 +156,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class BibleButton extends StatelessWidget {
+class Bible extends StatelessWidget {
   final String name;
   final String bibleID;
-  const BibleButton(this.name, this.bibleID, {super.key});
+  const Bible(this.name, this.bibleID, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: ElevatedButton(
-          onPressed: () => {},
-          child: SizedBox(
-            width: 300,
+    return Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+            color: Colors.brown,
+            width: 400,
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(
-                name,
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+                padding: const EdgeInsets.all(8.0), child: Text(name))));
   }
 }
