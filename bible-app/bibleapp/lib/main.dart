@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -10,7 +10,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,26 +17,45 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      home: const MyHomePage(title: 'Bible App'),
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.book_outlined)),
+                Tab(icon: Icon(Icons.menu_book)),
+                Tab(icon: Icon(Icons.search)),
+              ],
+            ),
+            title: const Text('Bible'),
+          ),
+          body: const TabBarView(
+            children: [
+              ChooseBiblePage(title: 'Choose Bible'),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class ChooseBiblePage extends StatefulWidget {
+  const ChooseBiblePage({super.key, required this.title});
   final String title;
-
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ChooseBiblePage> createState() => _ChooseBiblePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ChooseBiblePageState extends State<ChooseBiblePage> {
   late String searchUrl = 'https://api.scripture.api.bible/v1/bibles{language}';
   late String apiKey = 'a2659cf791469685d502c666d9ca0ad4';
   late List<Widget> bibleList = [];
   late Widget bibleDetails;
   String languageDropDownValue = "eng";
-
   List<String> bibleParams = <String>['language', 'abbreviation', 'name'];
   List<Map> languageList = <Map>[
     {
@@ -160,11 +178,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class Bible extends StatelessWidget {
+class Bible extends StatefulWidget {
   final String name;
   final String bibleID;
-  const Bible(this.name, this.bibleID, {super.key});
+  late Object bibleDetails;
+  Bible(this.name, this.bibleID, {super.key});
 
+  @override
+  State<Bible> createState() => _BibleState();
+}
+
+class _BibleState extends State<Bible> {
+  Object bibleDetails = {};
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -173,11 +198,14 @@ class Bible extends StatelessWidget {
           padding: const EdgeInsets.all(4.0),
           child: ElevatedButton(
             onPressed: () {
-              var thisBibleID = getBibleId(bibleID);
+              getBibleDetails(widget.bibleID);
+
               showDialog(
                 context: context,
-                builder: (BuildContext context) =>
-                    BibleDetailsDialogue(thisBibleID),
+                builder: (BuildContext context) => BibleDetailsDialogue(
+                    bibleID: widget.bibleID,
+                    name: widget.name,
+                    bibleData: bibleDetails),
               );
             },
             child: Container(
@@ -186,7 +214,7 @@ class Bible extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(name,
+                      child: Text(widget.name,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -196,28 +224,50 @@ class Bible extends StatelessWidget {
         ));
   }
 
-  getBibleId(String bibleID) {
-    return 'boogaloo';
+  Future getBibleDetails(thisBibleID) async {
+    String searchUrl = 'https://api.scripture.api.bible/v1/bibles/{bibleID}';
+    String apiKey = 'a2659cf791469685d502c666d9ca0ad4';
+
+    searchUrl = searchUrl.replaceAll("{bibleID}", thisBibleID);
+
+    var response = await http.get(Uri.parse(searchUrl),
+        headers: {"api-key": apiKey, "accept": 'applicaion/json'});
+
+    var jData = jsonDecode(response.body);
+
+    setState(() {
+      bibleDetails = jData['data'];
+    });
   }
 }
 
 class BibleDetailsDialogue extends StatelessWidget {
-  const BibleDetailsDialogue(
-    thisBibleID, {
+  final String bibleID;
+  final String name;
+  final bibleData;
+
+  const BibleDetailsDialogue({
+    required this.name,
+    required this.bibleID,
+    required this.bibleData,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(bibleData['description']);
+    //String description = bibleData['name'];
+
     return AlertDialog(
         content: SizedBox(
       height: 500,
       child: Column(
         children: [
-          const Text('Awesome Bible', style: TextStyle(fontSize: 18)),
-          const Padding(
+          Text(name, style: TextStyle(fontSize: 18)),
+          Text(bibleID, style: TextStyle(fontSize: 18)),
+          Padding(
             padding: EdgeInsets.all(20.0),
-            child: Text('Title:'),
+            child: Text('Title: '),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
