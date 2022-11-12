@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,6 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
   late List itemList = [];
   String dropdownValue = limitList.first;
   String offsetDropdownValue = pageList.first;
+
+  String currentGIFURL = 'https://flutter.dev';
 
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
@@ -195,19 +198,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
-                        print('tapped');
-                      },
-                      child: GridTile(
-                        child: Image.network(itemList[index]),
-                      ),
-                    );
+                        onTap: () {
+                          setState(() {
+                            //currentGIFURL = itemList[index];
+                          });
+                          inform();
+                        },
+                        child: GridTile(
+                          child: Image.network(itemList[index]),
+                        ));
                   },
                 ),
               ),
             ],
           ),
         ));
+  }
+
+  inform() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => MyWebView(currentGIFURL)));
   }
 
   Future doSearch(String input, limit, String pageDropdownValue) async {
@@ -230,5 +240,31 @@ class _MyHomePageState extends State<MyHomePage> {
         totalCount = '${jData["pagination"]["total_count"]}';
       });
     }
+  }
+}
+
+class MyWebView extends StatelessWidget {
+  String url;
+  MyWebView(this.url);
+
+  final Completer<WebViewController> _controller =
+      Completer<WebViewController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('View GIF'),
+        ),
+        body: Builder(builder: (BuildContext context) {
+          return WebView(
+            initialUrl: url,
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (WebViewController webViewController) {
+              _controller.complete(webViewController);
+            },
+            gestureNavigationEnabled: true,
+          );
+        }));
   }
 }
